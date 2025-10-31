@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harta Cronicarilor Moldoveni</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f0f0e8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  h1 {
+    margin: 10px 0;
+    color: #3e2f1c;
+  }
+.map-container {
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    max-width: 900px;
+    border: 3px solid #d2b48c;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #eee;
+  }
+
+  .map-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+ .marker:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+
+  .popup {
+    position: absolute;
+    background: rgba(255, 248, 230, 0.95);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 200px;
+    font-size: 14px;
+    display: none;
+    z-index: 10;
+  }
+
+  .popup h3 {
+    margin: 0 0 5px;
+    color: #402a18;
+  }
+
+  .popup p {
+    margin: 0;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<h1>Harta Cronicarilor Moldoveni</h1>
+
+<div class="map-container" id="map">
+  <!-- Înlocuiește harta cu imaginea ta: -->
+<img src="https://oradeistorie.ro/wp-content/uploads/statele-medievale-romanesti-in-secolul-xiv-prima-jumatate-a-secolului-xv.jpg" alt="Harta medievală a Moldovei">
+
+  <!-- Marcatoare -->
+  <div class="marker" style="top: 27%; left: 60%;" data-nume="Grigore Ureche" data-info="Faptele bune nu se pierd, iar cele rele rămân pe vecie ca o rușine asupra urmașilor." ></div>
+
+
+  <div class="marker" style="top: 28%; left: 67%;" data-nume="Miron Costin" data-info="Feciorii cei buni adaugă şi cresc numele părinţilor lor şi‑l fac fără de moarte; iar feciorii cei răi ocarăsc şi sting numele părinţilor buni." ></div>
+
+  <div class="marker" style="top: 28%; left: 71%;" data-nume="Ion Neculce" data-info="Caci cine le va ceti şi le va crede, bine va fi, iară cine nu le va crede, iară va fi bine." ></div>
+  <div class="marker" style="top: 70%; left: 55%;" data-nume="Constantin Cantacuzino" data-info="Vlahii, cum le zic ei, iar noi, Romanii, sunt adevăraţi Romani în credinţă şi în bărbăţie… Însă Romani nu înţeleg numai aceştia de aici, ci şi din Ardeal, care încă şi mai numeroşi sunt, şi Moldovenii şi toţi câţi într‑altă parte se află…" ></div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <h3 id="popup-title"></h3>
+    <p id="popup-text"></p>
+  </div>
+</div>
+
+<script>
+  const markers = document.querySelectorAll('.marker');
+  const popup = document.getElementById('popup');
+  const title = document.getElementById('popup-title');
+  const text = document.getElementById('popup-text');
+ markers.forEach(marker => {
+    marker.addEventListener('click', (e) => {
+      const name = marker.getAttribute('data-nume');
+      const info = marker.getAttribute('data-info');
+      title.textContent = name;
+      text.textContent = info;
+
+      const rect = marker.getBoundingClientRect();
+      const mapRect = document.getElementById('map').getBoundingClientRect();
+
+      popup.style.left = (rect.left - mapRect.left + 25) + 'px';
+      popup.style.top = (rect.top - mapRect.top) + 'px';
+      popup.style.display = 'block';
+    });
+  });
+ document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('marker')) {
+      popup.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
